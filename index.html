@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CVU Colombo Forum 2026 — Design to Survive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Cinzel:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --navy: #0A0E1A;
+    --navy-mid: #111827;
+    --navy-light: #1C2539;
+    --steel: #1E3A5F;
+    --red: #C01C1C;
+    --red-light: #E02020;
+    --red-dark: #8B1010;
+    --gold: #D4A820;
+    --gold-light: #F0C840;
+    --silver: #8BA0B8;
+    --silver-light: #B8CDD8;
+    --white: #F0F4F8;
+    --text-muted: #7A8FA8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── ANIMATED BACKGROUND ─── */
+  .bg-tactical {
+    background-color: var(--navy);
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(30,58,95,0.6) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(192,28,28,0.08) 0%, transparent 50%),
+      linear-gradient(180deg, rgba(10,14,26,0) 0%, rgba(10,14,26,0.95) 100%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cpath d='M30 5 L55 30 L30 55 L5 30Z' stroke='rgba(139,160,184,0.04)' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ─── ENVELOPE SCENE ─── */
+  #envelope-scene {
+    position: fixed; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at center, #111827 0%, #0A0E1A 100%);
+    z-index: 50;
+    transition: opacity .8s ease, visibility .8s ease;
+    overflow: hidden;
+  }
+  #envelope-scene::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='40' cy='40' r='35' stroke='rgba(212,168,32,0.03)' stroke-width='1'/%3E%3Ccircle cx='40' cy='40' r='25' stroke='rgba(212,168,32,0.03)' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  /* Scanning line effect */
+  #envelope-scene::after {
+    content: '';
+    position: absolute; left: 0; right: 0; top: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,32,0.4), transparent);
+    animation: scanLine 3s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes scanLine {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  #envelope-scene.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .scene-eyebrow {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px; letter-spacing: 8px;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 36px; opacity: 0;
+    animation: envFadeUp .8s ease .3s forwards;
+    text-shadow: 0 0 20px rgba(212,168,32,0.5);
+  }
+
+  #env-wrap {
+    width: min(380px, 90vw);
+    height: 250px;
+    cursor: pointer;
+    perspective: 1200px;
+    position: relative;
+    opacity: 0;
+    animation: envFadeUp .8s ease .6s forwards;
+  }
+
+  #envelope {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 20px 60px rgba(192,28,28,0.3));
+    transition: filter 0.3s;
+  }
+  #envelope:hover { filter: drop-shadow(0 24px 70px rgba(212,168,32,0.4)); }
+
+  .env-body {
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, #1C2539 0%, #0F1828 60%, #0A0E1A 100%);
+    border-radius: 6px;
+    border: 1px solid rgba(212,168,32,0.3);
+  }
+  .env-body::before {
+    content: '';
+    position: absolute; inset: 8px;
+    border: 1px solid rgba(212,168,32,0.15);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+
+  .env-left {
+    position: absolute; top: 0; left: 0;
+    width: 50%; height: 100%;
+    background: linear-gradient(to right, #1A2A45, #142038);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+  .env-right {
+    position: absolute; top: 0; right: 0;
+    width: 50%; height: 100%;
+    background: linear-gradient(to left, #0E1828, #0A1420);
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+  }
+  .env-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(to top, #1E3A5F, #152840);
+    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+    border-radius: 0 0 6px 6px;
+  }
+
+  .env-flap {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(175deg, #1E2D45 0%, #162238 55%, #0E1828 100%);
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    transform-origin: top center;
+    border-top: 1px solid rgba(212,168,32,0.25);
+    transition: transform .95s cubic-bezier(.4,0,.2,1);
+    z-index: 2;
+  }
+  .env-flap.open { transform: rotateX(-180deg); }
+
+  /* WAX SEAL — replaced with tactical insignia */
+  #env-seal {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -22%);
+    width: 72px; height: 72px;
+    z-index: 10; cursor: pointer;
+    transition: transform .3s;
+    filter: drop-shadow(0 0 16px rgba(192,28,28,0.6));
+  }
+  #env-seal:hover { transform: translate(-50%, -22%) scale(1.1); }
+  #env-seal.broken { animation: sealCrumble .5s ease forwards; }
+
+  @keyframes sealCrumble {
+    0%   { transform: translate(-50%,-22%) scale(1); }
+    25%  { transform: translate(-50%,-22%) scale(1.25) rotate(8deg); }
+    60%  { transform: translate(-50%,-22%) scale(.6) rotate(-14deg); opacity: .4; }
+    100% { transform: translate(-50%,-22%) scale(0) rotate(22deg); opacity: 0; }
+  }
+
+  .scene-hint {
+    margin-top: 28px;
+    font-family: 'Orbitron', monospace;
+    font-size: 9px; letter-spacing: 5px;
+    text-transform: uppercase; color: var(--gold);
+    opacity: 0;
+    animation: envFadeUp .8s ease 1.1s forwards;
+  }
+
+  @keyframes envFadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── MAIN CONTENT ─── */
+  #main-content {
+    display: none;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  #main-content.fade-in { opacity: 1; }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    padding: 5rem 1rem 4rem;
+    text-align: center;
+    overflow: hidden;
+    /* රූපය ඇතුළත් කිරීම සහ අඳුරු Gradient එකක් එකතු කිරීම */
+    background: linear-gradient(180deg, rgba(17, 24, 39, 0.7) 0%, rgba(10, 14, 26, 0.9) 100%), 
+                url('bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Scroll කරද්දී ලස්සන Effect එකක් ලැබෙනවා */
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    /* පිපිරීම් සහ මිසයිල වල එළිය නිසා අකුරු නොපෙනී යාම වැළැක්වීමට Overlay එකක් */
+    background: 
+        radial-gradient(ellipse 80% 50% at 50% 50%, rgba(10, 14, 26, 0.4) 0%, rgba(10, 14, 26, 0.8) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Grid overlay */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(212,168,32,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,168,32,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Content එක රූපයට සහ Grid එකට උඩින් තබා ගැනීමට */
+  .hero > * {
+      position: relative;
+      z-index: 3;
+  }
+
+  .hero-orgs {
+    display: flex; justify-content: center; align-items: center;
+    gap: 2rem; margin-bottom: 2.5rem;
+    opacity: 0; animation: envFadeUp 0.8s ease 0.2s forwards;
+  }
+  .org-badge {
+    background: rgba(28,37,57,0.8);
+    border: 1px solid rgba(212,168,32,0.3);
+    border-radius: 8px; padding: 0.6rem 1rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem; letter-spacing: 0.1em;
+    color: var(--gold-light); line-height: 1.4;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem; letter-spacing: 0.3em;
+    color: var(--silver); text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    opacity: 0; animation: envFadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-title-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 600; letter-spacing: 0.2em;
+    color: var(--silver-light); text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    opacity: 0; animation: envFadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-title-main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 18vw, 9rem);
+    letter-spacing: 0.05em; line-height: 0.9;
+    color: white;
+    /* Text Shadow එක තවත් තද කරන්න එවිට රූපය උඩ අකුරු කැපී පෙනේ */
+    text-shadow: 0 0 50px rgba(192,28,28,0.6), 0 10px 40px rgba(0,0,0,1);
+    margin-bottom: 1rem;
+    opacity: 0; animation: envFadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .hero-subtitle {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-weight: 500; color: var(--silver-light);
+    letter-spacing: 0.05em; font-style: italic;
+    max-width: 500px; margin: 0 auto 2.5rem;
+    opacity: 0; animation: envFadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-date-block {
+    display: inline-flex; align-items: center; gap: 1.2rem;
+    background: linear-gradient(135deg, rgba(192,28,28,0.2), rgba(192,28,28,0.05));
+    border: 1px solid rgba(192,28,28,0.5);
+    border-radius: 10px; padding: 0.9rem 2rem;
+    margin-bottom: 1rem;
+    opacity: 0; animation: envFadeUp 0.8s ease 0.7s forwards;
+  }
+  .hero-date-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; line-height: 1; color: var(--red-light);
+    text-shadow: 0 0 30px rgba(224,32,32,0.5);
+  }
+  .hero-date-text {
+    text-align: left;
+  }
+  .hero-date-month {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem; letter-spacing: 0.2em; color: white; font-weight: 700;
+  }
+  .hero-date-year {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem; color: var(--silver); letter-spacing: 0.1em;
+  }
+  .hero-venue {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem; letter-spacing: 0.3em;
+    color: var(--gold); text-transform: uppercase;
+    opacity: 0; animation: envFadeUp 0.8s ease 0.8s forwards;
+  }
+
+  /* ─── SECTION REVEAL ─── */
+  .section-reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .section-reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── SECTION TITLES ─── */
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 0.15em;
+    color: white; text-align: center;
+    margin-bottom: 0.3rem;
+  }
+  .divider-steel {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin: 0 auto 2rem; max-width: 320px;
+  }
+  .divider-steel::before { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold)); }
+  .divider-steel::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to left, transparent, var(--gold)); }
+  .divider-steel span { color: var(--gold); font-size: 0.7rem; font-family: 'Orbitron', monospace; letter-spacing: 0.3em; }
+
+  /* ─── COUNTDOWN ─── */
+  .countdown-box {
+    background: linear-gradient(135deg, rgba(28,37,57,0.9) 0%, rgba(14,24,40,0.95) 100%);
+    border-radius: 14px;
+    padding: 2rem 1rem;
+    text-align: center;
+    border: 1px solid rgba(212,168,32,0.25);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(212,168,32,0.1);
+    position: relative; overflow: hidden;
+  }
+  .countdown-box::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(212,168,32,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(212,168,32,0.02) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+  }
+  .timer-unit {
+    background: rgba(10,14,26,0.8);
+    border: 1px solid rgba(212,168,32,0.3);
+    border-radius: 8px; padding: 0.8rem 0.6rem;
+    min-width: 72px;
+  }
+  .timer-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 2.2rem; font-weight: 700; line-height: 1;
+    color: var(--gold-light);
+    text-shadow: 0 0 20px rgba(212,168,32,0.5);
+  }
+  .timer-label { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.3rem; letter-spacing: 0.08em; font-family: 'Rajdhani', sans-serif; }
+
+  /* ─── AGENDA ─── */
+  .agenda-box {
+    background: rgba(14,24,40,0.8);
+    border: 1px solid rgba(212,168,32,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .agenda-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 0.8rem 1.2rem;
+    border-bottom: 1px solid rgba(139,160,184,0.08);
+    transition: background 0.2s;
+  }
+  .agenda-item:last-child { border-bottom: none; }
+  .agenda-item:hover { background: rgba(212,168,32,0.05); }
+  .agenda-time {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.72rem; color: var(--gold); min-width: 90px;
+    padding-top: 0.15rem; letter-spacing: 0.05em;
+  }
+  .agenda-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--red-light); border: 2px solid var(--red);
+    flex-shrink: 0; margin-top: 0.4rem;
+    box-shadow: 0 0 8px rgba(224,32,32,0.4);
+  }
+  .agenda-name { font-size: 0.95rem; color: var(--silver-light); line-height: 1.4; font-weight: 500; }
+  .agenda-speaker { font-size: 0.8rem; color: var(--gold); font-weight: 600; margin-top: 0.1rem; }
+
+  /* ─── SPEAKERS ─── */
+  .speaker-card {
+    background: rgba(28,37,57,0.6);
+    border: 1px solid rgba(139,160,184,0.15);
+    border-radius: 10px; padding: 1.2rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .speaker-card:hover {
+    border-color: rgba(212,168,32,0.4);
+    box-shadow: 0 4px 24px rgba(212,168,32,0.1);
+  }
+  .speaker-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--steel), var(--navy-mid));
+    border: 2px solid rgba(212,168,32,0.3);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 0.8rem;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--gold);
+  }
+  .speaker-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; color: white; }
+  .speaker-topic { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem; line-height: 1.3; }
+
+  /* ─── LOCATION ─── */
+  .map-frame {
+    width: 100%; height: 280px; border-radius: 10px;
+    border: 1px solid rgba(212,168,32,0.2); overflow: hidden;
+  }
+  .map-frame iframe { width: 100%; height: 100%; border: none; display: block; }
+
+  .directions-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.7rem 1.8rem;
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+    color: white; border-radius: 6px; text-decoration: none;
+    font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    box-shadow: 0 4px 20px rgba(192,28,28,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none; cursor: pointer;
+  }
+  .directions-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(192,28,28,0.5); }
+
+  /* ─── RSVP ─── */
+  .rsvp-input {
+    width: 100%; padding: 0.8rem 1rem;
+    background: rgba(10,14,26,0.8);
+    border: 1px solid rgba(139,160,184,0.25);
+    border-radius: 6px; color: white;
+    font-family: 'Rajdhani', sans-serif; font-size: 1rem;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .rsvp-input:focus { border-color: var(--gold); }
+  .rsvp-input option { background: var(--navy-mid); }
+  .rsvp-label { font-size: 0.85rem; letter-spacing: 0.08em; color: var(--silver); font-weight: 600; margin-bottom: 0.35rem; display: block; font-family: 'Orbitron', monospace; }
+  .rsvp-btn {
+    width: 100%; padding: 0.85rem;
+    background: linear-gradient(135deg, var(--red-dark), var(--red-light));
+    color: white; border: none; border-radius: 6px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.2em;
+    cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(192,28,28,0.4);
+  }
+  .rsvp-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(192,28,28,0.5); }
+  .rsvp-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* ─── FOOTER ─── */
+  .footer-band {
+    background: rgba(10,14,26,0.95);
+    border-top: 1px solid rgba(212,168,32,0.15);
+    text-align: center; padding: 2rem 1rem;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 480px) {
+    .timer-num { font-size: 1.7rem; }
+    .timer-unit { min-width: 62px; }
+    .hero-title-main { font-size: 4.5rem; }
+    .hero-date-num { font-size: 2.8rem; }
+    .hero-orgs { flex-direction: column; gap: 0.8rem; }
+  }
+
+  /* ─── PULSE GLOW on seal ─── */
+  @keyframes pulseGlow {
+    0%, 100% { filter: drop-shadow(0 0 12px rgba(192,28,28,0.6)); }
+    50% { filter: drop-shadow(0 0 28px rgba(212,168,32,0.7)); }
+  }
+  #env-seal { animation: sealPulse 0s; }
+  #env-seal:not(.broken) { animation: pulseGlow 2.5s ease-in-out infinite; }
+
+</style>
+</head>
+<body class="bg-tactical">
+
+<!-- ══════════════════ ENVELOPE SCENE ══════════════════ -->
+<div id="envelope-scene">
+
+  <div id="logo-container" style="text-align: center; margin-bottom: 20px;">
+    
+    <img src="logo.png" alt="Logo" style="height: 100px; margin: 0 15px; vertical-align: middle;">
+  </div>
+
+  <p class="scene-eyebrow">CTBUH COLOMBO FORUM 2026</p>
+
+  <div id="env-wrap" onclick="openEnvelope()">
+    <div id="envelope">
+      <div class="env-body"></div>
+      <div class="env-left"></div>
+      <div class="env-right"></div>
+      <div class="env-bottom"></div>
+      <div class="env-flap" id="env-flap"></div>
+
+      <svg id="env-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" fill="#8B1010" stroke="#D4A820" stroke-width="2"/>
+        <circle cx="50" cy="50" r="38" fill="none" stroke="#D4A820" stroke-width="1" stroke-dasharray="3 3"/>
+        <!-- <rect x="32" y="42" width="36" height="28" fill="#D4A820" opacity="0.9" rx="1"/>
+        <rect x="28" y="44" width="44" height="3" fill="#F0C840" rx="1"/>
+        <rect x="38" y="52" width="6" height="6" fill="#8B1010" rx="0.5"/>
+        <rect x="56" y="52" width="6" height="6" fill="#8B1010" rx="0.5"/>
+        <rect x="46" y="54" width="8" height="16" fill="#8B1010" rx="0.5"/> -->
+        <!-- <polygon points="50,16 42,24 58,24" fill="#D4A820" opacity="0.9"/>
+        <text x="50" y="38" text-anchor="middle" font-size="5" fill="#D4A820" font-family="Arial" font-weight="bold" letter-spacing="1">CVU</text>
+        <text x="50" y="88" text-anchor="middle" font-size="4.5" fill="#F0C840" font-family="Arial" letter-spacing="0.5">COLOMBO FORUM</text> -->
+      </svg>
+    </div>
+  </div>
+
+  <p class="scene-hint">⬛ TAP TO OPEN BRIEFING ⬛</p>
+</div>
+
+<!-- ══════════════════ MAIN CONTENT ══════════════════ -->
+<div id="main-content">
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <!-- Corner decoration -->
+    <div style="position:absolute;top:1.5rem;left:1.5rem;opacity:0.25;pointer-events:none;">
+      <svg width="60" height="60" viewBox="0 0 60 60"><path d="M0 0 L30 0 L30 3 L3 3 L3 30 L0 30Z" fill="#D4A820"/></svg>
+    </div>
+    <div style="position:absolute;top:1.5rem;right:1.5rem;opacity:0.25;pointer-events:none;transform:scaleX(-1);">
+      <svg width="60" height="60" viewBox="0 0 60 60"><path d="M0 0 L30 0 L30 3 L3 3 L3 30 L0 30Z" fill="#D4A820"/></svg>
+    </div>
+
+    <div class="hero-orgs">
+      <!-- <div class="org-badge">COUNCIL ON<br>VERTICAL URBANISM<br><span style="color:var(--silver);font-size:0.6em;letter-spacing:0.05em;">COLOMBO FORUM</span></div>
+      <div style="color:var(--gold);font-size:1.5rem;opacity:0.5;">✦</div>
+      <div class="org-badge">COUNCIL ON<br>TALL BUILDINGS<br><span style="color:var(--silver);font-size:0.6em;letter-spacing:0.05em;">& URBAN HABITAT — SRI LANKA</span></div>
+     -->
+      <div id="logo-container" style="text-align: center;">
+      <img src="logo.png" alt="Logo" style="height: 100px; margin: 0 15px; vertical-align: middle;">
+      </div>
+
+    </div>
+
+    <p class="hero-eyebrow">// CVU Colombo Forum 2026 Presents //</p>
+    <p class="hero-title-sub">Design to</p>
+    <h1 class="hero-title-main">SURVIVE</h1>
+    <p class="hero-subtitle">Tall Buildings in an Age of Global Instability</p>
+
+    <div class="hero-date-block">
+      <div class="hero-date-num">24</div>
+      <div class="hero-date-text">
+        <div class="hero-date-month">JULY 2026</div>
+        <div class="hero-date-year">FRIDAY · COLOMBO</div>
+      </div>
+    </div>
+    <br>
+    <p class="hero-venue">📍 BMICH · Bauddhaloka Mawatha, Colombo 07</p>
+  </section>
+
+  <!-- ── COUNTDOWN ── -->
+  <section class="px-4 py-12 section-reveal">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="section-title">TIME TO DEPLOYMENT</h2>
+      <div class="divider-steel"><span>T-MINUS</span></div>
+      <div class="countdown-box">
+        <p style="font-family:'Orbitron',monospace;font-size:0.7rem;letter-spacing:0.3em;color:var(--text-muted);margin-bottom:1.5rem;">COUNTING DOWN TO JULY 24, 2026</p>
+        <div style="display:flex;justify-content:center;gap:0.8rem;flex-wrap:wrap;">
+          <div class="timer-unit"><div class="timer-num" id="days">00</div><div class="timer-label">DAYS</div></div>
+          <div style="font-family:'Orbitron',monospace;font-size:2rem;color:rgba(212,168,32,0.4);align-self:flex-start;padding-top:0.8rem;">:</div>
+          <div class="timer-unit"><div class="timer-num" id="hours">00</div><div class="timer-label">HOURS</div></div>
+          <div style="font-family:'Orbitron',monospace;font-size:2rem;color:rgba(212,168,32,0.4);align-self:flex-start;padding-top:0.8rem;">:</div>
+          <div class="timer-unit"><div class="timer-num" id="minutes">00</div><div class="timer-label">MINUTES</div></div>
+          <div style="font-family:'Orbitron',monospace;font-size:2rem;color:rgba(212,168,32,0.4);align-self:flex-start;padding-top:0.8rem;">:</div>
+          <div class="timer-unit"><div class="timer-num" id="seconds">00</div><div class="timer-label">SECONDS</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AGENDA ── -->
+  <section class="px-4 py-12 section-reveal" style="background:rgba(14,24,40,0.5);">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="section-title">EVENT AGENDA</h2>
+      <div class="divider-steel"><span>BRIEFING</span></div>
+      <div class="agenda-box">
+        <div id="agendaList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── KEYNOTE SPEAKERS ── -->
+  <section class="px-4 py-12 section-reveal">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="section-title">KEYNOTE SPEAKERS</h2>
+      <div class="divider-steel"><span>INTEL</span></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+        <div class="speaker-card">
+          <div class="speaker-icon">PM</div>
+          <div class="speaker-name">Prof. Priyan Mendis</div>
+          <div class="speaker-topic">Resilient Cities</div>
+        </div>
+        <div class="speaker-card">
+          <div class="speaker-icon">MS</div>
+          <div class="speaker-name">Prof. Mark Stewart</div>
+          <div class="speaker-topic">Blast Risk & Reliability</div>
+        </div>
+        <div class="speaker-card">
+          <div class="speaker-icon">DM</div>
+          <div class="speaker-name">Ass. Prof. Damith Mohotti</div>
+          <div class="speaker-topic">Resilient Buildings</div>
+        </div>
+        <div class="speaker-card">
+          <div class="speaker-icon">SB</div>
+          <div class="speaker-name">Mr. Simon Barnes</div>
+          <div class="speaker-topic">Resilient Facades</div>
+        </div>
+        <div class="speaker-card">
+          <div class="speaker-icon">YG</div>
+          <div class="speaker-name">Eng. Yasas Gunawardhana</div>
+          <div class="speaker-topic">AI on Resilience</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LOCATION ── -->
+  <section class="px-4 py-12 section-reveal" style="background:rgba(14,24,40,0.5);">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="section-title">OPERATION LOCATION</h2>
+      <div class="divider-steel"><span>COORDINATES</span></div>
+      <div style="background:rgba(28,37,57,0.7);border-radius:14px;padding:1.5rem;border:1px solid rgba(212,168,32,0.2);">
+        <div class="map-frame" style="margin-bottom:1.2rem;">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.7!2d79.8672!3d6.9103!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25960a3800001%3A0x0!2sBMICH%2C+Colombo!5e0!3m2!1sen!2slk!4v1"
+            width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy">
+          </iframe>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.8rem;margin-bottom:1.2rem;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#C01C1C" opacity="0.9"/><circle cx="12" cy="9" r="2.5" fill="white"/></svg>
+          <div>
+            <p style="font-family:'Rajdhani',sans-serif;font-weight:700;color:white;font-size:1rem;">BMICH — Bandaranaike Memorial International Conference Hall</p>
+            <p style="font-size:0.85rem;color:var(--silver);margin-top:0.2rem;">Bauddhaloka Mawatha, Colombo 07, Sri Lanka</p>
+          </div>
+        </div>
+        <div style="text-align:center;">
+          <a href="https://maps.google.com/?q=BMICH+Colombo" target="_blank" class="directions-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12l9-9 9 9"/><path d="M9 21V12h6v9"/></svg>
+            GET DIRECTIONS
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RSVP ── -->
+  <section class="px-4 py-12 section-reveal">
+    <div class="max-w-md mx-auto">
+      <h2 class="section-title">CONFIRM ATTENDANCE</h2>
+      <div class="divider-steel"><span>RSVP</span></div>
+      <div style="background:rgba(28,37,57,0.8);border:1px solid rgba(212,168,32,0.2);border-radius:14px;padding:2rem;">
+        <form id="rsvpForm">
+          <div style="margin-bottom:1.2rem;">
+            <label class="rsvp-label">Full Name</label>
+            <input type="text" name="name" class="rsvp-input" required placeholder="Enter your full name">
+          </div>
+          <div style="margin-bottom:1.2rem;">
+            <label class="rsvp-label">Designation / Organization</label>
+            <input type="text" name="designation" class="rsvp-input" placeholder="e.g. Structural Engineer, ABC Consultants">
+          </div>
+          <div style="margin-bottom:1.2rem;">
+            <label class="rsvp-label">Will You Attend?</label>
+            <select name="attendance" class="rsvp-input">
+              <option value="Yes">Yes, I will attend</option>
+              <option value="No">Unable to attend</option>
+            </select>
+          </div>
+          <button type="submit" id="submitBtn" class="rsvp-btn">CONFIRM REGISTRATION</button>
+        </form>
+        <p id="msg" style="text-align:center;margin-top:1rem;font-weight:600;color:var(--gold-light);font-family:'Rajdhani',sans-serif;"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CLOSING ── -->
+  <section class="px-4 py-12 section-reveal" style="background:rgba(14,24,40,0.7);text-align:center;">
+    <div class="max-w-xl mx-auto">
+      <div style="margin-bottom:1.5rem;">
+        <svg width="80" height="80" viewBox="0 0 80 80" style="margin:0 auto;display:block;opacity:0.7;">
+          <circle cx="40" cy="40" r="36" fill="none" stroke="#D4A820" stroke-width="1" stroke-dasharray="4 4"/>
+          <circle cx="40" cy="40" r="28" fill="rgba(30,58,95,0.5)" stroke="#D4A820" stroke-width="1.5"/>
+          <text x="40" y="37" text-anchor="middle" font-size="10" fill="#D4A820" font-family="Bebas Neue,Arial" letter-spacing="1">RESERVE</text>
+          <text x="40" y="50" text-anchor="middle" font-size="10" fill="#F0C840" font-family="Bebas Neue,Arial" letter-spacing="1">THE DATE</text>
+        </svg>
+      </div>
+      <p style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.15em;color:white;margin-bottom:0.5rem;">JULY 24TH, 2026</p>
+      <p style="font-family:'Rajdhani',sans-serif;font-size:1rem;color:var(--silver);letter-spacing:0.1em;">
+        Join us for a landmark forum on the future of tall buildings in an uncertain world.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer-band">
+    <p style="font-family:'Orbitron',monospace;font-size:0.75rem;font-weight:700;letter-spacing:0.2em;color:var(--gold);margin-bottom:0.5rem;">COUNCIL ON VERTICAL URBANISM — COLOMBO FORUM</p>
+    <p style="font-size:0.75rem;color:var(--text-muted);letter-spacing:0.1em;margin-bottom:0.3rem;">In association with CTBUH Sri Lanka Chapter</p>
+    <p style="font-size:0.65rem;color:rgba(139,160,184,0.5);letter-spacing:0.05em;">© 2026 CVU COLOMBO FORUM · ALL RIGHTS RESERVED</p>
+  </footer>
+
+</div><!-- /main-content -->
+
+<script>
+// ══════════════════════════════════════
+// AGENDA DATA
+// ══════════════════════════════════════
+const agenda = [
+  { time: "03:30", item: "Arrival of Guests", speaker: "" },
+  { time: "04:00", item: "Welcoming the Gathering & Lighting of the Oil Lamp", speaker: "Followed by the National Anthem" },
+  { time: "04:15", item: "Welcome Address", speaker: "Eng. Shiromal Fernando (10 min)" },
+  { time: "04:25", item: "CVU Colombo Forum — Theme Video", speaker: "" },
+  { time: "04:30", item: "Introduction to CVU Colombo Forum 2026", speaker: "Archt. Niroda Gunadasa (10 min)" },
+  { time: "04:40", item: "Keynote — \"Resilient Cities\"", speaker: "Prof. Priyan Mendis (20 min)" },
+  { time: "05:00", item: "Sponsor Video", speaker: "" },
+  { time: "05:10", item: "Keynote — Blast Risk & Reliability", speaker: "Prof. Mark Stewart (25 min)" },
+  { time: "05:35", item: "Keynote — Resilient Buildings", speaker: "Ass. Prof. Damith Mohotti (25 min)" },
+  { time: "06:00", item: "Keynote — Resilient Facades", speaker: "Mr. Simon Barnes (25 min)" },
+  { time: "06:25", item: "AI on Resilience", speaker: "Eng. Yasas Gunawardhana (10 min)" },
+  { time: "06:35", item: "Vote of Thanks & Tokens of Appreciation", speaker: "" },
+  { time: "06:40", item: "Refreshments", speaker: "Until 07:30" },
+];
+
+function buildAgenda() {
+  const list = document.getElementById('agendaList');
+  list.innerHTML = agenda.map((item, i) => `
+    <div class="agenda-item" style="animation:fadeUp 0.4s ${i*0.04}s both;">
+      <div class="agenda-time">${item.time}</div>
+      <div class="agenda-dot"></div>
+      <div class="agenda-name">
+        ${item.item}
+        ${item.speaker ? `<div class="agenda-speaker">▸ ${item.speaker}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── Countdown ──
+const eventDate = new Date('2026-07-24T16:00:00');
+function updateTimer() {
+  const diff = eventDate - new Date();
+  if (diff <= 0) { ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent='00'); return; }
+  document.getElementById('days').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
+  document.getElementById('hours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+  document.getElementById('minutes').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  document.getElementById('seconds').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+}
+updateTimer();
+setInterval(updateTimer, 1000);
+
+// ── Envelope Open ──
+let envelopeOpened = false;
+
+function playOpenSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [220, 293.66, 369.99, 440].forEach((f, i) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type = 'sawtooth'; o.frequency.value = f;
+      const t = ctx.currentTime + i * 0.12;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.04, t + 0.03);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 1.5);
+      o.start(t); o.stop(t + 2);
+    });
+  } catch(e) {}
+}
+
+function openEnvelope() {
+  if (envelopeOpened) return;
+  envelopeOpened = true;
+  document.getElementById('env-seal').classList.add('broken');
+  setTimeout(() => document.getElementById('env-flap').classList.add('open'), 420);
+  setTimeout(() => {
+    playOpenSound();
+    document.getElementById('envelope-scene').classList.add('hidden');
+    const main = document.getElementById('main-content');
+    main.style.display = 'block';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      main.classList.add('fade-in');
+      buildAgenda();
+      initScrollReveal();
+    }));
+  }, 1300);
+}
+
+// ── Scroll Reveal ──
+function initScrollReveal() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el));
+}
+
+// ── RSVP ──
+document.getElementById('rsvpForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const msg = document.getElementById('msg');
+  btn.disabled = true;
+  btn.textContent = 'PROCESSING...';
+  setTimeout(() => {
+    msg.textContent = '✔ Registration confirmed. We look forward to seeing you!';
+    btn.disabled = false;
+    btn.textContent = 'CONFIRM REGISTRATION';
+    e.target.reset();
+  }, 1200);
+});
+
+// ── Security ──
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.onkeydown = function(e) {
+  if (e.keyCode == 123) return false;
+  if (e.ctrlKey && e.shiftKey && ['I','C','J'].includes(String.fromCharCode(e.keyCode))) return false;
+  if (e.ctrlKey && e.keyCode == 85) return false;
+};
+</script>
+
+<script>
+  // Right-click limit කිරීම (සාමාන්‍ය කෙනෙකුට Inspect බලන්න බැරි වෙන්න)
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // Keyboard shortcuts (F12, Ctrl+Shift+I, Ctrl+U) block කිරීම
+  document.onkeydown = function(e) {
+    // F12 key
+    if(e.keyCode == 123) return false;
+    
+    // Ctrl+Shift+I (Inspect)
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+    
+    // Ctrl+Shift+C (Inspect Element)
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+    
+    // Ctrl+Shift+J (Console)
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+    
+    // Ctrl+U (View Source)
+    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+  }
+</script>
+
+</body>
+</html>
