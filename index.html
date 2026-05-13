@@ -403,26 +403,59 @@
   .agenda-speaker { font-size: 0.8rem; color: var(--gold); font-weight: 600; margin-top: 0.1rem; }
 
   /* ─── SPEAKERS ─── */
-  .speaker-card {
-    background: rgba(28,37,57,0.6);
-    border: 1px solid rgba(139,160,184,0.15);
-    border-radius: 10px; padding: 1.2rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  .speaker-card:hover {
-    border-color: rgba(212,168,32,0.4);
-    box-shadow: 0 4px 24px rgba(212,168,32,0.1);
-  }
-  .speaker-icon {
-    width: 48px; height: 48px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--steel), var(--navy-mid));
-    border: 2px solid rgba(212,168,32,0.3);
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 0.8rem;
-    font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--gold);
-  }
-  .speaker-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; color: white; }
-  .speaker-topic { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem; line-height: 1.3; }
+/* ─── SPEAKERS (Centered Version) ─── */
+.speaker-card {
+  background: rgba(28, 37, 57, 0.6);
+  border: 1px solid rgba(139, 160, 184, 0.15);
+  border-radius: 10px;
+  padding: 1.5rem; /* Space eka poddak wadi kala center nisa */
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  
+  /* Me kalla thamai card eka athula center karanne */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.speaker-card:hover {
+  border-color: rgba(212, 168, 32, 0.4);
+  box-shadow: 0 4px 24px rgba(212, 168, 32, 0.1);
+  transform: translateY(-5px);
+}
+
+.speaker-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: linear-gradient(135deg, var(--steel), var(--navy-mid));
+  border: 2px solid rgba(212, 168, 32, 0.3);
+  margin-bottom: 1rem;
+  filter: grayscale(100%);
+  transition: all 0.3s ease;
+}
+
+.speaker-card:hover .speaker-img {
+  filter: grayscale(0%);
+  border-color: var(--gold);
+  transform: scale(1.05); /* Image eka poddak loku wenawa hover weddi */
+}
+
+.speaker-name { 
+  font-family: 'Rajdhani', sans-serif; 
+  font-weight: 700; 
+  font-size: 1.1rem; /* Poddak loku kala */
+  color: white; 
+  margin: 0;
+}
+
+.speaker-topic { 
+  font-size: 0.85rem; 
+  color: var(--text-muted); 
+  margin-top: 0.4rem; 
+  line-height: 1.3; 
+}
 
   /* ─── LOCATION ─── */
   .map-frame {
@@ -569,7 +602,7 @@
       </div>
     </div>
     <br>
-    <p class="hero-venue">📍 BMICH · Bauddhaloka Mawatha, Colombo 07</p>
+    <p class="hero-venue">📍 JASMIN HALL · BMICH</p>
   </section>
 
   <!-- ── COUNTDOWN ── -->
@@ -604,39 +637,47 @@
   </section>
 
   <!-- ── KEYNOTE SPEAKERS ── -->
-  <section class="px-4 py-12 section-reveal">
-    <div class="max-w-2xl mx-auto">
-      <h2 class="section-title">KEYNOTE SPEAKERS</h2>
-      <div class="divider-steel"><span>INTEL</span></div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
-        <div class="speaker-card">
-          <div class="speaker-icon">PM</div>
-          <div class="speaker-name">Prof. Priyan Mendis</div>
-          <div class="speaker-topic">Resilient Cities</div>
-        </div>
-        <div class="speaker-card">
-          <div class="speaker-icon">MS</div>
-          <div class="speaker-name">Prof. Mark Stewart</div>
-          <div class="speaker-topic">Blast Risk & Reliability</div>
-        </div>
-        <div class="speaker-card">
-          <div class="speaker-icon">DM</div>
-          <div class="speaker-name">Ass. Prof. Damith Mohotti</div>
-          <div class="speaker-topic">Resilient Buildings</div>
-        </div>
-        <div class="speaker-card">
-          <div class="speaker-icon">SB</div>
-          <div class="speaker-name">Mr. Simon Barnes</div>
-          <div class="speaker-topic">Resilient Facades</div>
-        </div>
-        <div class="speaker-card">
-          <div class="speaker-icon">YG</div>
-          <div class="speaker-name">Eng. Yasas Gunawardhana</div>
-          <div class="speaker-topic">AI on Resilience</div>
-        </div>
+<section class="px-4 py-12 section-reveal">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="section-title">KEYNOTE SPEAKERS</h2>
+    <div class="divider-steel"><span>INTEL</span></div>
+    
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+      
+      <div class="speaker-card">
+        <img src="speak/mendis.jpg" alt="Prof. Priyan Mendis" class="speaker-img">
+        <div class="speaker-name">Prof. Priyan Mendis</div>
+        <div class="speaker-topic">Resilient Cities</div>
       </div>
+
+      <div class="speaker-card">
+        <img src="speak/stewart.jpg" alt="Prof. Mark Stewart" class="speaker-img">
+        <div class="speaker-name">Prof. Mark Stewart</div>
+        <div class="speaker-topic">Blast Risk & Reliability</div>
+      </div>
+
+      <div class="speaker-card">
+        <img src="speak/mohotti.jpg" alt="Ass. Prof. Damith Mohotti" class="speaker-img">
+        <div class="speaker-name">Ass. Prof. Damith Mohotti</div>
+        <div class="speaker-topic">Resilient Buildings</div>
+      </div>
+
+      <div class="speaker-card">
+        <img src="speak/barnes.jpg" alt="Mr. Simon Barnes" class="speaker-img">
+        <div class="speaker-name">Mr. Simon Barnes</div>
+        <div class="speaker-topic">Resilient Facades</div>
+      </div>
+
+      <div class="speaker-card">
+        <img src="speak/yasas.jpg" alt="Eng. Yasas Gunawardhana" class="speaker-img">
+        <div class="speaker-name">Eng. Yasas Gunawardhana</div>
+        <div class="speaker-topic">AI on Resilience</div>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- ── LOCATION ── -->
   <section class="px-4 py-12 section-reveal" style="background:rgba(14,24,40,0.5);">
@@ -645,20 +686,17 @@
       <div class="divider-steel"><span>COORDINATES</span></div>
       <div style="background:rgba(28,37,57,0.7);border-radius:14px;padding:1.5rem;border:1px solid rgba(212,168,32,0.2);">
         <div class="map-frame" style="margin-bottom:1.2rem;">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.7!2d79.8672!3d6.9103!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25960a3800001%3A0x0!2sBMICH%2C+Colombo!5e0!3m2!1sen!2slk!4v1"
-            width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy">
-          </iframe>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15843.639667943338!2d79.85438346862794!3d6.90137612397213!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2590068fc639f%3A0xf8f8a5e21d4a888b!2sBMICH%20Jasmin%20hall!5e0!3m2!1sen!2slk!4v1775817035994!5m2!1sen!2slk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <div style="display:flex;align-items:flex-start;gap:0.8rem;margin-bottom:1.2rem;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#C01C1C" opacity="0.9"/><circle cx="12" cy="9" r="2.5" fill="white"/></svg>
           <div>
-            <p style="font-family:'Rajdhani',sans-serif;font-weight:700;color:white;font-size:1rem;">BMICH — Bandaranaike Memorial International Conference Hall</p>
+            <p style="font-family:'Rajdhani',sans-serif;font-weight:700;color:white;font-size:1rem;">JASMIN HALL — BMICH</p>
             <p style="font-size:0.85rem;color:var(--silver);margin-top:0.2rem;">Bauddhaloka Mawatha, Colombo 07, Sri Lanka</p>
           </div>
         </div>
         <div style="text-align:center;">
-          <a href="https://maps.google.com/?q=BMICH+Colombo" target="_blank" class="directions-btn">
+          <a href="https://maps.app.goo.gl/mJnA8t6e5znQFuLWA" target="_blank" class="directions-btn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12l9-9 9 9"/><path d="M9 21V12h6v9"/></svg>
             GET DIRECTIONS
           </a>
