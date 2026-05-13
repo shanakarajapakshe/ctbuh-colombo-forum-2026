@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Cinzel:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+
 <style>
   :root {
     --navy: #0A0E1A;
@@ -608,8 +609,8 @@
   <!-- ── COUNTDOWN ── -->
   <section class="px-4 py-12 section-reveal">
     <div class="max-w-2xl mx-auto">
-      <h2 class="section-title">TIME TO DEPLOYMENT</h2>
-      <div class="divider-steel"><span>T-MINUS</span></div>
+      <h2 class="section-title">COUNTDOWN TO THE FORUM</h2>
+      <div class="divider-steel"><span>SAVE THE DATE</span></div>
       <div class="countdown-box">
         <p style="font-family:'Orbitron',monospace;font-size:0.7rem;letter-spacing:0.3em;color:var(--text-muted);margin-bottom:1.5rem;">COUNTING DOWN TO JULY 24, 2026</p>
         <div style="display:flex;justify-content:center;gap:0.8rem;flex-wrap:wrap;">
@@ -629,7 +630,7 @@
   <section class="px-4 py-12 section-reveal" style="background:rgba(14,24,40,0.5);">
     <div class="max-w-2xl mx-auto">
       <h2 class="section-title">EVENT AGENDA</h2>
-      <div class="divider-steel"><span>BRIEFING</span></div>
+      <div class="divider-steel"><span>PROGRAMME SCHEDULE</span></div>
       <div class="agenda-box">
         <div id="agendaList"></div>
       </div>
@@ -640,7 +641,7 @@
 <section class="px-4 py-12 section-reveal">
   <div class="max-w-2xl mx-auto">
     <h2 class="section-title">KEYNOTE SPEAKERS</h2>
-    <div class="divider-steel"><span>INTEL</span></div>
+    <div class="divider-steel"><span>ACADEMIA & INDUSTRY</span></div>
     
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
       
@@ -653,25 +654,31 @@
       <div class="speaker-card">
         <img src="speak/stewart.jpg" alt="Prof. Mark Stewart" class="speaker-img">
         <div class="speaker-name">Prof. Mark Stewart</div>
-        <div class="speaker-topic">Blast Risk & Reliability</div>
+        <div class="speaker-topic">Risk-Based Blast Protection of Buildings</div>
       </div>
 
       <div class="speaker-card">
         <img src="speak/mohotti.jpg" alt="Ass. Prof. Damith Mohotti" class="speaker-img">
         <div class="speaker-name">Ass. Prof. Damith Mohotti</div>
-        <div class="speaker-topic">Resilient Buildings</div>
+        <div class="speaker-topic">Emerging Threats to Critical Infrastructure: Resilience, Security and Habitability in the Built Environment</div>
+      </div>
+
+      <div class="speaker-card">
+        <img src="speak/brian.png" alt="Prof. Brian Uy" class="speaker-img">
+        <div class="speaker-name">Prof. Brian Uy</div>
+        <div class="speaker-topic">Topic to be announced</div>
       </div>
 
       <div class="speaker-card">
         <img src="speak/barnes.jpg" alt="Mr. Simon Barnes" class="speaker-img">
         <div class="speaker-name">Mr. Simon Barnes</div>
-        <div class="speaker-topic">Resilient Facades</div>
+        <div class="speaker-topic">Topic related to resilient facades</div>
       </div>
 
       <div class="speaker-card">
         <img src="speak/yasas.jpg" alt="Eng. Yasas Gunawardhana" class="speaker-img">
         <div class="speaker-name">Eng. Yasas Gunawardhana</div>
-        <div class="speaker-topic">AI on Resilience</div>
+        <div class="speaker-topic">Designing for the unknown: AI as the New Safety Factor</div>
       </div>
 
     </div>
@@ -707,29 +714,71 @@
 
   <!-- ── RSVP ── -->
   <section class="px-4 py-12 section-reveal">
-    <div class="max-w-md mx-auto">
+    <div class="max-w-lg mx-auto">
       <h2 class="section-title">CONFIRM ATTENDANCE</h2>
       <div class="divider-steel"><span>RSVP</span></div>
       <div style="background:rgba(28,37,57,0.8);border:1px solid rgba(212,168,32,0.2);border-radius:14px;padding:2rem;">
-        <form id="rsvpForm">
+
+        <!-- Attendee Type Toggle -->
+        <div style="margin-bottom:1.8rem;">
+          <label class="rsvp-label">Attendee Type</label>
+          <div style="display:flex;gap:0;border-radius:8px;overflow:hidden;border:1px solid rgba(212,168,32,0.3);">
+            <button type="button" id="btnLocal" onclick="switchType('local')"
+              style="flex:1;padding:0.75rem;font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:0.1em;border:none;cursor:pointer;transition:all 0.25s;background:linear-gradient(135deg,var(--red-dark),var(--red-light));color:white;font-weight:700;">
+              🇱🇰 LOCAL
+            </button>
+            <button type="button" id="btnForeign" onclick="switchType('foreign')"
+              style="flex:1;padding:0.75rem;font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:0.1em;border:none;cursor:pointer;transition:all 0.25s;background:rgba(10,14,26,0.6);color:var(--silver);">
+              🌍 FOREIGN
+            </button>
+          </div>
+        </div>
+
+        <form id="rsvpForm" novalidate>
+          <!-- Common Fields -->
           <div style="margin-bottom:1.2rem;">
-            <label class="rsvp-label">Full Name</label>
-            <input type="text" name="name" class="rsvp-input" required placeholder="Enter your full name">
+            <label class="rsvp-label">Full Name *</label>
+            <input type="text" name="name" id="f_name" class="rsvp-input" required placeholder="Enter your full name">
+          </div>
+          <div style="margin-bottom:1.2rem;">
+            <label class="rsvp-label">Email Address *</label>
+            <input type="email" name="email" id="f_email" class="rsvp-input" required placeholder="your@email.com">
           </div>
           <div style="margin-bottom:1.2rem;">
             <label class="rsvp-label">Designation / Organization</label>
-            <input type="text" name="designation" class="rsvp-input" placeholder="e.g. Structural Engineer, ABC Consultants">
+            <input type="text" name="designation" id="f_designation" class="rsvp-input" placeholder="e.g. Structural Engineer, ABC Consultants">
           </div>
           <div style="margin-bottom:1.2rem;">
-            <label class="rsvp-label">Will You Attend?</label>
-            <select name="attendance" class="rsvp-input">
-              <option value="Yes">Yes, I will attend</option>
-              <option value="No">Unable to attend</option>
-            </select>
+            <label class="rsvp-label">Contact Number</label>
+            <input type="tel" name="phone" id="f_phone" class="rsvp-input" placeholder="+94 77 000 0000">
           </div>
+
+          <!-- LOCAL ONLY Fields -->
+          <div id="localFields">
+          </div>
+
+          <!-- FOREIGN ONLY Fields -->
+          <div id="foreignFields" style="display:none;">
+            <div style="margin-bottom:1.2rem;">
+              <label class="rsvp-label">Country *</label>
+              <select name="country" id="f_country" class="rsvp-input">
+                <option value="">— Select Your Country —</option>
+                <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Andorra</option><option>Angola</option><option>Antigua and Barbuda</option><option>Argentina</option><option>Armenia</option><option>Australia</option><option>Austria</option><option>Azerbaijan</option><option>Bahamas</option><option>Bahrain</option><option>Bangladesh</option><option>Barbados</option><option>Belarus</option><option>Belgium</option><option>Belize</option><option>Benin</option><option>Bhutan</option><option>Bolivia</option><option>Bosnia and Herzegovina</option><option>Botswana</option><option>Brazil</option><option>Brunei</option><option>Bulgaria</option><option>Burkina Faso</option><option>Burundi</option><option>Cabo Verde</option><option>Cambodia</option><option>Cameroon</option><option>Canada</option><option>Central African Republic</option><option>Chad</option><option>Chile</option><option>China</option><option>Colombia</option><option>Comoros</option><option>Congo</option><option>Costa Rica</option><option>Croatia</option><option>Cuba</option><option>Cyprus</option><option>Czech Republic</option><option>Denmark</option><option>Djibouti</option><option>Dominica</option><option>Dominican Republic</option><option>Ecuador</option><option>Egypt</option><option>El Salvador</option><option>Equatorial Guinea</option><option>Eritrea</option><option>Estonia</option><option>Eswatini</option><option>Ethiopia</option><option>Fiji</option><option>Finland</option><option>France</option><option>Gabon</option><option>Gambia</option><option>Georgia</option><option>Germany</option><option>Ghana</option><option>Greece</option><option>Grenada</option><option>Guatemala</option><option>Guinea</option><option>Guyana</option><option>Haiti</option><option>Honduras</option><option>Hungary</option><option>Iceland</option><option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option><option>Ireland</option><option>Israel</option><option>Italy</option><option>Jamaica</option><option>Japan</option><option>Jordan</option><option>Kazakhstan</option><option>Kenya</option><option>Kiribati</option><option>Korea, North</option><option>Korea, South</option><option>Kosovo</option><option>Kuwait</option><option>Kyrgyzstan</option><option>Laos</option><option>Latvia</option><option>Lebanon</option><option>Lesotho</option><option>Liberia</option><option>Libya</option><option>Liechtenstein</option><option>Lithuania</option><option>Luxembourg</option><option>Madagascar</option><option>Malawi</option><option>Malaysia</option><option>Maldives</option><option>Mali</option><option>Malta</option><option>Marshall Islands</option><option>Mauritania</option><option>Mauritius</option><option>Mexico</option><option>Micronesia</option><option>Moldova</option><option>Monaco</option><option>Mongolia</option><option>Montenegro</option><option>Morocco</option><option>Mozambique</option><option>Myanmar</option><option>Namibia</option><option>Nauru</option><option>Nepal</option><option>Netherlands</option><option>New Zealand</option><option>Nicaragua</option><option>Niger</option><option>Nigeria</option><option>North Macedonia</option><option>Norway</option><option>Oman</option><option>Pakistan</option><option>Palau</option><option>Panama</option><option>Papua New Guinea</option><option>Paraguay</option><option>Peru</option><option>Philippines</option><option>Poland</option><option>Portugal</option><option>Qatar</option><option>Romania</option><option>Russia</option><option>Rwanda</option><option>Saint Kitts and Nevis</option><option>Saint Lucia</option><option>Samoa</option><option>San Marino</option><option>Saudi Arabia</option><option>Senegal</option><option>Serbia</option><option>Seychelles</option><option>Sierra Leone</option><option>Singapore</option><option>Slovakia</option><option>Slovenia</option><option>Solomon Islands</option><option>Somalia</option><option>South Africa</option><option>Spain</option><option>Sudan</option><option>Suriname</option><option>Sweden</option><option>Switzerland</option><option>Syria</option><option>Taiwan</option><option>Tajikistan</option><option>Tanzania</option><option>Thailand</option><option>Timor-Leste</option><option>Togo</option><option>Tonga</option><option>Trinidad and Tobago</option><option>Tunisia</option><option>Turkey</option><option>Turkmenistan</option><option>Tuvalu</option><option>Uganda</option><option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option><option>United States</option><option>Uruguay</option><option>Uzbekistan</option><option>Vanuatu</option><option>Vatican City</option><option>Venezuela</option><option>Vietnam</option><option>Yemen</option><option>Zambia</option><option>Zimbabwe</option>
+              </select>
+            </div>
+          
+            <!-- Payment info note — actual details sent via email after submit -->
+            <div style="background:rgba(212,168,32,0.08);border:1px solid rgba(212,168,32,0.3);border-radius:8px;padding:1rem;margin-bottom:1.2rem;">
+              <p style="font-family:'Rajdhani',sans-serif;font-size:0.92rem;color:var(--gold-light);line-height:1.6;margin:0;">
+                💳 <strong>Note:</strong> A registration fee is applicable for this event. After submitting, our <strong>CTBUH Team</strong> will contact you via email with payment instructions to confirm your seat.
+              </p>
+            </div>
+          </div>
+          </div>
+
           <button type="submit" id="submitBtn" class="rsvp-btn">CONFIRM REGISTRATION</button>
         </form>
-        <p id="msg" style="text-align:center;margin-top:1rem;font-weight:600;color:var(--gold-light);font-family:'Rajdhani',sans-serif;"></p>
+        <p id="msg" style="text-align:center;margin-top:1rem;font-weight:600;font-family:'Rajdhani',sans-serif;font-size:1.05rem;"></p>
       </div>
     </div>
   </section>
@@ -771,19 +820,21 @@
 // AGENDA DATA
 // ══════════════════════════════════════
 const agenda = [
-  { time: "03:30", item: "Arrival of Guests", speaker: "" },
-  { time: "04:00", item: "Welcoming the Gathering & Lighting of the Oil Lamp", speaker: "Followed by the National Anthem" },
-  { time: "04:15", item: "Welcome Address", speaker: "Eng. Shiromal Fernando (10 min)" },
-  { time: "04:25", item: "CVU Colombo Forum — Theme Video", speaker: "" },
-  { time: "04:30", item: "Introduction to CVU Colombo Forum 2026", speaker: "Archt. Niroda Gunadasa (10 min)" },
-  { time: "04:40", item: "Keynote — \"Resilient Cities\"", speaker: "Prof. Priyan Mendis (20 min)" },
+  { time: "02:00", item: "Arrival of guest", speaker: "" },
+  { time: "02:30", item: "Welcoming the gathering and Lighting of the oil lamp", speaker: "Followed by the National Anthem" },
+  { time: "02:45", item: "Welcome Address", speaker: "Eng. Shiromal Fernando (10 min)" },
+  { time: "02:55", item: "CVU Colombo Forum – Theme Video", speaker: "" },
+  { time: "03:00", item: "Introduction to CVU Colombo Forum 2026", speaker: "Archt. Niroda Gunadasa (10 min)" },
+  { time: "03:10", item: "Keynote — \"Resilient Cities\"", speaker: "Prof. Priyan Mendis (20 min)" },
+  { time: "03:30", item: "Sponsor Video / Launching", speaker: "" },
+  { time: "04:10", item: "Keynote — Security by Design: Risk-Based Blast Protection of Buildings", speaker: "Prof. Mark Stewart (25 min)" },
+  { time: "04:35", item: "Keynote — Emerging Threats to Critical Infrastructure: Resilience, Security and Habitability in the Built Environment", speaker: "Ass. Prof. Damith Mohotti (25 min)" },
   { time: "05:00", item: "Sponsor Video", speaker: "" },
-  { time: "05:10", item: "Keynote — Blast Risk & Reliability", speaker: "Prof. Mark Stewart (25 min)" },
-  { time: "05:35", item: "Keynote — Resilient Buildings", speaker: "Ass. Prof. Damith Mohotti (25 min)" },
-  { time: "06:00", item: "Keynote — Resilient Facades", speaker: "Mr. Simon Barnes (25 min)" },
-  { time: "06:25", item: "AI on Resilience", speaker: "Eng. Yasas Gunawardhana (10 min)" },
-  { time: "06:35", item: "Vote of Thanks & Tokens of Appreciation", speaker: "" },
-  { time: "06:40", item: "Refreshments", speaker: "Until 07:30" },
+  { time: "05:10", item: "Keynote — Structural Engineering", speaker: "Prof. Brian Uy (25 min)" },
+  { time: "05:35", item: "Keynote — Resilient Facades", speaker: "Mr. Simon Barnes (25 min)" },
+  { time: "06:00", item: "Designing for the unknown: AI as the New Safety Factor", speaker: "Eng. Yasas Gunawardhana (10 min)" },
+  { time: "06:35", item: "Vote of Thanks and handing over the tokens of appreciation", speaker: "" },
+  { time: "06:40", item: "Refreshments", speaker: "Until 07:00" },
 ];
 
 function buildAgenda() {
@@ -860,19 +911,97 @@ function initScrollReveal() {
   document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el));
 }
 
-// ── RSVP ──
-document.getElementById('rsvpForm').addEventListener('submit', e => {
+// ══════════════════════════════════════
+// CONFIGURATION
+// Apps Script deploy කලාට පස්සේ URL මෙතන දාන්න
+// ══════════════════════════════════════
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwsiWhf57ydeuCSsTmg6scXx8r-lX67BuuKbXPenxvK4ypVTJ63iRTREy70Pt7yx1/exec';
+
+// ── Attendee Type Switch ──
+let attendeeType = 'local';
+
+function switchType(type) {
+  attendeeType = type;
+  const btnLocal      = document.getElementById('btnLocal');
+  const btnForeign    = document.getElementById('btnForeign');
+  const localFields   = document.getElementById('localFields');
+  const foreignFields = document.getElementById('foreignFields');
+
+  if (type === 'local') {
+    btnLocal.style.background   = 'linear-gradient(135deg,var(--red-dark),var(--red-light))';
+    btnLocal.style.color        = 'white';
+    btnForeign.style.background = 'rgba(10,14,26,0.6)';
+    btnForeign.style.color      = 'var(--silver)';
+    localFields.style.display   = 'block';
+    foreignFields.style.display = 'none';
+    document.getElementById('f_country').removeAttribute('required');
+  } else {
+    btnForeign.style.background = 'linear-gradient(135deg,var(--red-dark),var(--red-light))';
+    btnForeign.style.color      = 'white';
+    btnLocal.style.background   = 'rgba(10,14,26,0.6)';
+    btnLocal.style.color        = 'var(--silver)';
+    localFields.style.display   = 'none';
+    foreignFields.style.display = 'block';
+    document.getElementById('f_country').setAttribute('required','required');
+  }
+}
+
+// ── RSVP Form Submit ──
+document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const btn = document.getElementById('submitBtn');
   const msg = document.getElementById('msg');
-  btn.disabled = true;
+
+  const name  = document.getElementById('f_name').value.trim();
+  const email = document.getElementById('f_email').value.trim();
+  if (!name || !email) {
+    msg.style.color = '#E02020';
+    msg.textContent = '⚠ Please fill in Name and Email.';
+    return;
+  }
+  if (attendeeType === 'foreign' && !document.getElementById('f_country').value) {
+    msg.style.color = '#E02020';
+    msg.textContent = '⚠ Please select your Country.';
+    return;
+  }
+
+  btn.disabled    = true;
   btn.textContent = 'PROCESSING...';
-  setTimeout(() => {
-    msg.textContent = '✔ Registration confirmed. We look forward to seeing you!';
-    btn.disabled = false;
-    btn.textContent = 'CONFIRM REGISTRATION';
-    e.target.reset();
-  }, 1200);
+  msg.style.color = 'var(--silver)';
+  msg.textContent = 'Submitting registration…';
+
+  const formData = {
+    timestamp:    new Date().toLocaleString('en-GB', {timeZone:'Asia/Colombo'}),
+    attendeeType: attendeeType.toUpperCase(),
+    name:         name,
+    email:        email,
+    designation:  document.getElementById('f_designation').value.trim(),
+    phone:        document.getElementById('f_phone').value.trim(),
+    country:      attendeeType === 'foreign' ? document.getElementById('f_country').value : 'Sri Lanka',
+  };
+
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method:  'POST',
+      mode:    'no-cors',
+      headers: {'Content-Type':'application/json'},
+      body:    JSON.stringify(formData),
+    });
+    msg.style.color = 'var(--gold-light)';
+    if (attendeeType === 'local') {
+      msg.innerHTML = '✔ Registration confirmed!<br><small style="color:var(--silver);">A confirmation email has been sent to <strong>' + email + '</strong></small>';
+    } else {
+      msg.innerHTML = '✔ Registration received!<br><small style="color:var(--silver);">Payment details have been emailed to <strong>' + email + '</strong>. Please complete payment to confirm your seat.</small>';
+    }
+  } catch(err) {
+    msg.style.color = '#E02020';
+    msg.textContent = '⚠ Something went wrong. Please try again.';
+  }
+
+  btn.disabled    = false;
+  btn.textContent = 'CONFIRM REGISTRATION';
+  e.target.reset();
+  switchType('local');
 });
 
 // ── Security ──
@@ -907,5 +1036,19 @@ document.onkeydown = function(e) {
   }
 </script>
 
+
+<!--
+=======================================================================
+  SETUP — GOOGLE APPS SCRIPT
+=======================================================================
+  1. Google Drive → New → Google Sheets → "CVU Forum 2026 RSVP"
+  2. Extensions → Apps Script → Code.gs file ෙකේ content paste කරන්න
+  3. Code.gs ෙකේ top variables (email, payment details) update කරන්න
+  4. Deploy → New Deployment → Web App
+     Execute as: Me | Who has access: Anyone
+  5. Deploy → URL copy කරන්න
+  6. මෙම file ෙකේ APPS_SCRIPT_URL = 'YOUR_...' replace කරන්න
+=======================================================================
+-->
 </body>
 </html>
