@@ -425,9 +425,11 @@
   transform: translateY(-5px);
 }
 
+/* --- SPEAKERS (Centered Version) --- */
 .speaker-img {
-  width: 70px;
-  height: 70px;
+  /* 70px thibunu eka 100px kala */
+  width: 100px; 
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
   background: linear-gradient(135deg, var(--steel), var(--navy-mid));
@@ -437,10 +439,11 @@
   transition: all 0.3s ease;
 }
 
+/* Hover karana kota thawa poddak loku wenna me kalla thiyanna */
 .speaker-card:hover .speaker-img {
   filter: grayscale(0%);
   border-color: var(--gold);
-  transform: scale(1.05); /* Image eka poddak loku wenawa hover weddi */
+  transform: scale(1.1); /* Hover weddi 10% loku wenawa */
 }
 
 .speaker-name { 
@@ -603,7 +606,7 @@
       </div>
     </div>
     <br>
-    <p class="hero-venue">📍 JASMIN HALL · BMICH</p>
+    <p class="hero-venue">📍 JASMINE HALL · BMICH</p>
   </section>
 
   <!-- ── COUNTDOWN ── -->
@@ -698,7 +701,7 @@
         <div style="display:flex;align-items:flex-start;gap:0.8rem;margin-bottom:1.2rem;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#C01C1C" opacity="0.9"/><circle cx="12" cy="9" r="2.5" fill="white"/></svg>
           <div>
-            <p style="font-family:'Rajdhani',sans-serif;font-weight:700;color:white;font-size:1rem;">JASMIN HALL — BMICH</p>
+            <p style="font-family:'Rajdhani',sans-serif;font-weight:700;color:white;font-size:1rem;">JASMINE HALL — BMICH</p>
             <p style="font-size:0.85rem;color:var(--silver);margin-top:0.2rem;">Bauddhaloka Mawatha, Colombo 07, Sri Lanka</p>
           </div>
         </div>
@@ -745,8 +748,13 @@
             <input type="email" name="email" id="f_email" class="rsvp-input" required placeholder="your@email.com">
           </div>
           <div style="margin-bottom:1.2rem;">
-            <label class="rsvp-label">Designation / Organization</label>
-            <input type="text" name="designation" id="f_designation" class="rsvp-input" placeholder="e.g. Structural Engineer, ABC Consultants">
+            <label class="rsvp-label">Designation</label>
+            <input type="text" name="designation" id="f_designation" class="rsvp-input" placeholder="e.g. Structural Engineer">
+          </div>
+
+          <div style="margin-bottom:1.2rem;">
+            <label class="rsvp-label">Organization</label>
+            <input type="text" name="organization" id="f_organization" class="rsvp-input" placeholder="e.g. ABC Consultants">
           </div>
           <div style="margin-bottom:1.2rem;">
             <label class="rsvp-label">Contact Number</label>
@@ -915,7 +923,7 @@ function initScrollReveal() {
 // CONFIGURATION
 // Apps Script deploy කලාට පස්සේ URL මෙතන දාන්න
 // ══════════════════════════════════════
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrwsiWhf57ydeuCSsTmg6scXx8r-lX67BuuKbXPenxvK4ypVTJ63iRTREy70Pt7yx1/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxCQHvB8_3aEJ9QxGtpghF8XzEe3MAnVSEYfFRMUQjZkRH6OihSUfQjnStt3hiya1_u/exec';
 
 // ── Attendee Type Switch ──
 let attendeeType = 'local';
@@ -976,6 +984,7 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
     name:         name,
     email:        email,
     designation:  document.getElementById('f_designation').value.trim(),
+    organization: document.getElementById('f_organization').value.trim(), // අලුතින් එක් කළා
     phone:        document.getElementById('f_phone').value.trim(),
     country:      attendeeType === 'foreign' ? document.getElementById('f_country').value : 'Sri Lanka',
   };
