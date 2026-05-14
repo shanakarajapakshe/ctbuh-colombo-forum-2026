@@ -566,7 +566,7 @@
     </div>
   </div>
 
-  <p class="scene-hint">⬛ TAP TO OPEN BRIEFING ⬛</p>
+  <p class="scene-hint">⬛ TAP TO VIEW THE EVENT BRIEF ⬛</p>
 </div>
 
 <!-- ══════════════════ MAIN CONTENT ══════════════════ -->
@@ -640,11 +640,11 @@
     </div>
   </section>
 
-  <!-- ── KEYNOTE SPEAKERS ── -->
+<!-- ── KEYNOTE SPEAKERS ── -->
 <section class="px-4 py-12 section-reveal">
   <div class="max-w-2xl mx-auto">
-    <h2 class="section-title">KEYNOTE SPEAKERS</h2>
-    <div class="divider-steel"><span>ACADEMIA & INDUSTRY</span></div>
+    <h2 class="section-title">Keynote Speakers</h2>
+    <div class="divider-steel"><span>Academia & Industry</span></div>
     
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
       
@@ -669,19 +669,19 @@
       <div class="speaker-card">
         <img src="speak/brian.png" alt="Prof. Brian Uy" class="speaker-img">
         <div class="speaker-name">Prof. Brian Uy</div>
-        <div class="speaker-topic">Topic to be announced</div>
+        <div class="speaker-topic">Topic to Be Announced</div>
       </div>
 
       <div class="speaker-card">
         <img src="speak/barnes.jpg" alt="Mr. Simon Barnes" class="speaker-img">
         <div class="speaker-name">Mr. Simon Barnes</div>
-        <div class="speaker-topic">Topic related to resilient facades</div>
+        <div class="speaker-topic">Topic Related to Resilient Facades</div>
       </div>
 
       <div class="speaker-card">
         <img src="speak/yasas.jpg" alt="Eng. Yasas Gunawardhana" class="speaker-img">
         <div class="speaker-name">Eng. Yasas Gunawardhana</div>
-        <div class="speaker-topic">Designing for the unknown: AI as the New Safety Factor</div>
+        <div class="speaker-topic">Designing for the Unknown: AI as the New Safety Factor</div>
       </div>
 
     </div>
@@ -692,7 +692,7 @@
   <!-- ── LOCATION ── -->
   <section class="px-4 py-12 section-reveal" style="background:rgba(14,24,40,0.5);">
     <div class="max-w-2xl mx-auto">
-      <h2 class="section-title">OPERATION LOCATION</h2>
+      <h2 class="section-title">EVENT LOCATION</h2>
       <div class="divider-steel"><span>COORDINATES</span></div>
       <div style="background:rgba(28,37,57,0.7);border-radius:14px;padding:1.5rem;border:1px solid rgba(212,168,32,0.2);">
         <div class="map-frame" style="margin-bottom:1.2rem;">
@@ -718,7 +718,7 @@
   <!-- ── RSVP ── -->
   <section class="px-4 py-12 section-reveal">
     <div class="max-w-lg mx-auto">
-      <h2 class="section-title">CONFIRM ATTENDANCE</h2>
+      <h2 class="section-title">CONFIRM YOUR ATTENDANCE</h2>
       <div class="divider-steel"><span>RSVP</span></div>
       <div style="background:rgba(28,37,57,0.8);border:1px solid rgba(212,168,32,0.2);border-radius:14px;padding:2rem;">
 
@@ -744,6 +744,10 @@
             <input type="text" name="name" id="f_name" class="rsvp-input" required placeholder="Enter your full name">
           </div>
           <div style="margin-bottom:1.2rem;">
+            <label class="rsvp-label">Calling Name <span style="font-size: 0.8rem; opacity: 0.8; font-weight: 400;">(Please provide this name at the registration table when marking your attendance) *</span></label>
+            <input type="text" name="callingName" id="f_calling_name" class="rsvp-input" required placeholder="Name for badge">
+          </div>
+          <div style="margin-bottom:1.2rem;">
             <label class="rsvp-label">Email Address *</label>
             <input type="email" name="email" id="f_email" class="rsvp-input" required placeholder="your@email.com">
           </div>
@@ -759,6 +763,15 @@
           <div style="margin-bottom:1.2rem;">
             <label class="rsvp-label">Contact Number</label>
             <input type="tel" name="phone" id="f_phone" class="rsvp-input" placeholder="+94 77 000 0000">
+          </div>
+          <!-- Meal Preference Field -->
+          <div style="margin-bottom:1.2rem;">
+            <label class="rsvp-label">Meal Preference *</label>
+            <select name="meal" id="f_meal" class="rsvp-input" required>
+              <option value="">— Select Preference —</option>
+              <option value="Non-Veg">Non-Veg</option>
+              <option value="Veg">Veg</option>
+            </select>
           </div>
 
           <!-- LOCAL ONLY Fields -->
@@ -828,20 +841,20 @@
 // AGENDA DATA
 // ══════════════════════════════════════
 const agenda = [
-  { time: "02:00", item: "Arrival of guest", speaker: "" },
-  { time: "02:30", item: "Welcoming the gathering and Lighting of the oil lamp", speaker: "Followed by the National Anthem" },
+  { time: "02:00", item: "Arrival of Guests", speaker: "" },
+  { time: "02:30", item: "Welcoming the Gathering and Lighting of the Oil Lamp", speaker: "Followed by the National Anthem" },
   { time: "02:45", item: "Welcome Address", speaker: "Eng. Shiromal Fernando (10 min)" },
   { time: "02:55", item: "CVU Colombo Forum – Theme Video", speaker: "" },
   { time: "03:00", item: "Introduction to CVU Colombo Forum 2026", speaker: "Archt. Niroda Gunadasa (10 min)" },
-  { time: "03:10", item: "Keynote — \"Resilient Cities\"", speaker: "Prof. Priyan Mendis (20 min)" },
+  { time: "03:10", item: "Keynote — Resilient Cities", speaker: "Prof. Priyan Mendis (20 min)" },
   { time: "03:30", item: "Sponsor Video / Launching", speaker: "" },
   { time: "04:10", item: "Keynote — Security by Design: Risk-Based Blast Protection of Buildings", speaker: "Prof. Mark Stewart (25 min)" },
-  { time: "04:35", item: "Keynote — Emerging Threats to Critical Infrastructure: Resilience, Security and Habitability in the Built Environment", speaker: "Ass. Prof. Damith Mohotti (25 min)" },
+  { time: "04:35", item: "Keynote — Emerging Threats to Critical Infrastructure: Resilience, Security and Habitability in the Built Environment", speaker: "Assoc. Prof. Damith Mohotti (25 min)" },
   { time: "05:00", item: "Sponsor Video", speaker: "" },
   { time: "05:10", item: "Keynote — Structural Engineering", speaker: "Prof. Brian Uy (25 min)" },
   { time: "05:35", item: "Keynote — Resilient Facades", speaker: "Mr. Simon Barnes (25 min)" },
-  { time: "06:00", item: "Designing for the unknown: AI as the New Safety Factor", speaker: "Eng. Yasas Gunawardhana (10 min)" },
-  { time: "06:35", item: "Vote of Thanks and handing over the tokens of appreciation", speaker: "" },
+  { time: "06:00", item: "Designing for the Unknown: AI as the New Safety Factor", speaker: "Eng. Yasas Gunawardhana (10 min)" },
+  { time: "06:35", item: "Vote of Thanks and Handing Over the Tokens of Appreciation", speaker: "" },
   { time: "06:40", item: "Refreshments", speaker: "Until 07:00" },
 ];
 
@@ -923,7 +936,7 @@ function initScrollReveal() {
 // CONFIGURATION
 // Apps Script deploy කලාට පස්සේ URL මෙතන දාන්න
 // ══════════════════════════════════════
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxCQHvB8_3aEJ9QxGtpghF8XzEe3MAnVSEYfFRMUQjZkRH6OihSUfQjnStt3hiya1_u/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwov7h5-du2ckhj6zDjWRJ3j_xYOhOg65Qq9BxcPVhLip7eT3brO-NikGU1sptEnsM/exec';
 
 // ── Attendee Type Switch ──
 let attendeeType = 'local';
@@ -960,11 +973,14 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
   const btn = document.getElementById('submitBtn');
   const msg = document.getElementById('msg');
 
-  const name  = document.getElementById('f_name').value.trim();
+  const name = document.getElementById('f_name').value.trim();
+  const callingName = document.getElementById('f_calling_name').value.trim();
   const email = document.getElementById('f_email').value.trim();
-  if (!name || !email) {
+  const meal = document.getElementById('f_meal').value;
+
+  if (!name || !callingName || !email || !meal) { // Add callingName here
     msg.style.color = '#E02020';
-    msg.textContent = '⚠ Please fill in Name and Email.';
+    msg.textContent = '⚠ Please fill in Name, Calling Name, Email, and Meal.';
     return;
   }
   if (attendeeType === 'foreign' && !document.getElementById('f_country').value) {
@@ -979,14 +995,16 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
   msg.textContent = 'Submitting registration…';
 
   const formData = {
-    timestamp:    new Date().toLocaleString('en-GB', {timeZone:'Asia/Colombo'}),
-    attendeeType: attendeeType.toUpperCase(),
-    name:         name,
-    email:        email,
-    designation:  document.getElementById('f_designation').value.trim(),
-    organization: document.getElementById('f_organization').value.trim(), // අලුතින් එක් කළා
-    phone:        document.getElementById('f_phone').value.trim(),
-    country:      attendeeType === 'foreign' ? document.getElementById('f_country').value : 'Sri Lanka',
+      timestamp:    new Date().toLocaleString('en-GB', {timeZone:'Asia/Colombo'}),
+      attendeeType: attendeeType.toUpperCase(),
+      name:         document.getElementById('f_name').value.trim(),
+      callingName:  callingName, // New field
+      email:        document.getElementById('f_email').value.trim(),
+      designation:  document.getElementById('f_designation').value.trim(),
+      organization: document.getElementById('f_organization').value.trim(),
+      phone:        document.getElementById('f_phone').value.trim(),
+      meal:         document.getElementById('f_meal').value,
+      country:      attendeeType === 'foreign' ? document.getElementById('f_country').value : 'Sri Lanka',
   };
 
   try {
