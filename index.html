@@ -744,25 +744,25 @@
             <input type="text" name="name" id="f_name" class="rsvp-input" required placeholder="Enter your full name">
           </div>
           <div style="margin-bottom:1.2rem;">
-            <label class="rsvp-label">Calling Name <span style="font-size: 0.8rem; opacity: 0.8; font-weight: 400;">(Please provide this name at the registration table when marking your attendance) *</span></label>
-            <input type="text" name="callingName" id="f_calling_name" class="rsvp-input" required placeholder="Name for badge">
+            <label class="rsvp-label">Calling Name *<span style="font-size: 0.8rem; opacity: 0.8; font-weight: 400;">(Please provide this name at the registration table when marking your attendance)</span></label>
+            <input type="text" name="callingName" id="f_calling_name" class="rsvp-input" required placeholder="The Name You Prefer to be Called by">
           </div>
           <div style="margin-bottom:1.2rem;">
             <label class="rsvp-label">Email Address *</label>
             <input type="email" name="email" id="f_email" class="rsvp-input" required placeholder="your@email.com">
           </div>
           <div style="margin-bottom:1.2rem;">
-            <label class="rsvp-label">Designation</label>
-            <input type="text" name="designation" id="f_designation" class="rsvp-input" placeholder="e.g. Structural Engineer">
+            <label class="rsvp-label">Designation *</label>
+            <input type="text" name="designation" id="f_designation" class="rsvp-input" required placeholder="e.g. Structural Engineer">
           </div>
 
           <div style="margin-bottom:1.2rem;">
-            <label class="rsvp-label">Organization</label>
-            <input type="text" name="organization" id="f_organization" class="rsvp-input" placeholder="e.g. ABC Consultants">
+            <label class="rsvp-label">Organization *</label>
+            <input type="text" name="organization" id="f_organization" class="rsvp-input" required placeholder="e.g. ABC Consultants">
           </div>
           <div style="margin-bottom:1.2rem;">
-            <label class="rsvp-label">Contact Number</label>
-            <input type="tel" name="phone" id="f_phone" class="rsvp-input" placeholder="+94 77 000 0000">
+            <label class="rsvp-label">Contact Number *</label>
+            <input type="tel" name="phone" id="f_phone" class="rsvp-input" required placeholder="+94 77 000 0000">
           </div>
           <!-- Meal Preference Field -->
           <div style="margin-bottom:1.2rem;">
@@ -936,7 +936,7 @@ function initScrollReveal() {
 // CONFIGURATION
 // Apps Script deploy කලාට පස්සේ URL මෙතන දාන්න
 // ══════════════════════════════════════
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwov7h5-du2ckhj6zDjWRJ3j_xYOhOg65Qq9BxcPVhLip7eT3brO-NikGU1sptEnsM/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwLxXEKMKjDzW_bIlk4sR6-mk3CetUxb_oIXdvrgvr7N2XtQ_v7PI93XELhmGQvf8zM/exec';
 
 // ── Attendee Type Switch ──
 let attendeeType = 'local';
@@ -976,11 +976,14 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
   const name = document.getElementById('f_name').value.trim();
   const callingName = document.getElementById('f_calling_name').value.trim();
   const email = document.getElementById('f_email').value.trim();
+  const designation = document.getElementById('f_designation').value.trim();
+  const organization = document.getElementById('f_organization').value.trim();
+  const phone = document.getElementById('f_phone').value.trim();
   const meal = document.getElementById('f_meal').value;
 
-  if (!name || !callingName || !email || !meal) { // Add callingName here
+  if (!name || !callingName || !email || !designation || !organization || !phone || !meal) {
     msg.style.color = '#E02020';
-    msg.textContent = '⚠ Please fill in Name, Calling Name, Email, and Meal.';
+    msg.textContent = '⚠ Please fill in all the required fields.';
     return;
   }
   if (attendeeType === 'foreign' && !document.getElementById('f_country').value) {
